@@ -1,34 +1,37 @@
-import java.util.Scanner;
-
+/**
+ * TicTacToe
+ * UC5 validates whether a move is inside the board boundaries
+ * and whether the selected cell is empty.
+ */
 public class TicTacToe {
 
-    static Scanner scanner = new Scanner(System.in);
-
+    // Board initialization
+    static char[][] board = {
+            {'-', '-', '-'},
+            {'-', '-', '-'},
+            {'-', '-', '-'}
+    };
     public static void main(String[] args) {
 
-        // UC3: get slot input
-        int slot = getUserInput();
+        // Test cases
+        System.out.println(isValidMove(1, 1)); // true
+        System.out.println(isValidMove(3, 0)); // false (out of bounds)
 
-        // UC4: convert slot → row & column
-        int[] index = convertSlotToIndex(slot);
-
-        int row = index[0];
-        int col = index[1];
-
-        System.out.println("Slot " + slot + " maps to:");
-        System.out.println("Row: " + row + ", Column: " + col);
+        board[1][1] = 'X';
+        System.out.println(isValidMove(1, 1)); // false (already occupied)
     }
 
-    // UC3
-    public static int getUserInput() {
-        System.out.print("Enter a slot number (1-9): ");
-        return scanner.nextInt();
-    }
+    static boolean isValidMove(int row, int col) {
 
-    // UC4
-    public static int[] convertSlotToIndex(int slot) {
-        int row = (slot - 1) / 3;
-        int col = (slot - 1) % 3;
-        return new int[]{row, col};
+        // Check bounds (0–2)
+        if (row < 0 || row > 2 || col < 0 || col > 2) {
+            return false;
+        }
+
+        if (board[row][col] != '-') {
+            return false;
+        }
+
+        return true;
     }
 }
